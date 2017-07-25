@@ -1,0 +1,17 @@
+{
+    "jscodehints.detectedExclusions": [
+        "C:/Users/jsidhu/Documents/nodeprojects/societyPro/src/bower_components/lodash/vendor/backbone/test/noconflict.js",
+        "C:/Users/jsidhu/Documents/nodeprojects/societyPro/src/bower_components/lodash/vendor/backbone/test/setup/environment.js",
+        "underscore.js",
+        "C:/Users/jsidhu/Documents/nodeprojects/societyPro/src/bower_components/lodash/vendor/underscore/test/utility.js",
+        "C:/Users/jsidhu/Documents/nodeprojects/societyPro/src/bower_components/lodash/vendor/underscore/test/objects.js",
+        "C:/Users/jsidhu/Documents/nodeprojects/societyPro/src/bower_components/lodash/vendor/underscore/test/functions.js",
+        "C:/Users/jsidhu/Documents/nodeprojects/societyPro/src/bower_components/lodash/vendor/backbone/test/setup/dom-setup.js",
+        "C:/Users/jsidhu/Documents/nodeprojects/societyPro/src/bower_components/lodash/vendor/underscore/test/cross-document.js",
+        "C:/Users/jsidhu/Documents/nodeprojects/societyPro/server.js",
+        "C:/Users/jsidhu/Documents/nodeprojects/societyPro/src/scripts/app.js",
+        "C:/Users/jsidhu/Documents/nodeprojects/societyPro/src/scripts/services/sproServices.js",
+        "C:/Users/jsidhu/Documents/nodeprojects/societyPro/src/bower_components/lodash/vendor/underscore/test/collections.js",
+        "C:/Users/jsidhu/Documents/nodeprojects/societyPro/src/bower_components/lodash/vendor/underscore/test/chaining.js"
+    ]
+}

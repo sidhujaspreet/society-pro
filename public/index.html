@@ -1,0 +1,143 @@
+<html>
+<head>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?libraries=places,geometry&language=en-US"></script>
+    
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <!--<link rel="stylesheet" href="css/new.css">
+	<script src="controllers/controller.js"></script>-->
+    
+    <!--Project dependencies-->
+    <link rel="stylesheet" href="scripts/styles/index.css"/>
+    <script type="text/javascript" src="scripts/app.js"></script>
+    <script type="text/javascript" src="scripts/controllers/sproControllers.js"></script>
+    <script type="text/javascript" src="scripts/directives/sproDirectives.js"></script>
+    <script type="text/javascript" src="scripts/services/sproServices.js"></script>
+    <script type="text/javascript" src="scripts/factories/sproFactories.js"></script>
+</head>
+<body ng-app="societyPro" ng-controller="societyProCtrl as ctrl">
+        <!-- Fixed navbar -->
+<div id="header" class="navbar navbar-fixed-top navbar-default">
+  	<div id="navElements" class="container pull-left">
+      <div class="navbar-header"><a class="navbar-brand" href="#">Project name</a><a class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="glyphicon glyphicon-bar"></span>
+          <span class="glyphicon glyphicon-bar"></span>
+          <span class="glyphicon glyphicon-bar"></span>
+        </a>
+      </div>
+        <!--div class="navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a>
+                </li>
+                <li><a href="#about">About</a>
+                </li>
+                <li><a href="#contact">Contact</a>
+                </li>
+            </ul>
+        
+        </div>
+        <!--/.navbar-collapse -->
+    </div>
+</div>
+<div id="mapBody"></div>
+<div id="leftPanel" class="container">
+    <div class="sidebar-nav-fixed affix">
+        <div class="panel-group" id="accordion">
+            <div class="panel panel-default">
+                <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#searchServiceForm">
+                    <h4 class="panel-title">Looking for a Service</h4>
+                </div>
+                <form id="searchServiceForm" class="panel-collapse collapse in" ng-submit="ctrl.submitForm()">
+                    <div class="form-group panel-body">
+                        <ul class="nav">
+                            <li class="nav-header"><h4>Location</h4></li>
+                            <!--<li class="nav-header">
+                                <div class="btn-group btn-toggle"> 
+                                    <button type="button" class="panel-heading btn btn-default" data-toggle="collapse" data-parent="#accordion" href="#enterLocationInput">Enter</button>
+                                    <button type="button" class="panel-heading btn btn-default" data-toggle="collapse" data-parent="#accordion" href="#pickLocationInput">Pick</button>
+                                </div>
+                            <li class="nav-header">&nbsp;</li>-->
+                            <li class="nav-header">
+                                <div id="enterLocationInput" class="panel-body panel-collapse collapse in"> 
+                                    <spro-search-location location="ctrl.location"></spro-search-location>
+                                </div>
+                                <div id="pickLocationInput" class="panel-body panel-collapse collapse in"> 
+                                     <p class="text-primary">* Or pick location by double clicking on map.</p>
+                                </div>
+                            </li>
+
+                            <!--<li class="nav-header"><h4>Enter location</h4></li>
+                            <li class="nav-header"><input class="form-control" type="text" placeholder="Search"></li>
+                            <li class="nav-header">&nbsp;</li>
+                            <li class="nav-header"><button class="btn btn-primary">Pick location</button></li>-->
+                            <li class="nav-header"><spro-dropdown items="ctrl.radius" label="Select Radius" title="Select" selected-item="ctrl.selectedRadius"></spro-dropdown></li>
+                            <!--<li class="nav-header"><select ng-model="selectedServiceName" ng-options="serviceName.Value as serviceName.Key for serviceName in serviceNames"></select></li>
+                            <li class="nav-header"><spro-service-names selected-service-name="selectedServiceName"></spro-service-names></li>-->
+                            <li class="nav-header"><spro-dropdown items="ctrl.serviceNames" label="Select Service" title="Select" selected-item="ctrl.selectedServiceName"></spro-dropdown></li>
+                            <li class="nav-header">&nbsp;</li>
+                            <li class="nav-header"><button class="btn btn-primary" type="reset" value="Reset">Reset</button>&nbsp;
+                            <button class="btn btn-success" type="submit">Find</button></li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#reportServiceForm">
+                    <h4 class="panel-title">Report a Service</h4>
+                </div>
+                <form id="reportServiceForm" class="panel-collapse collapse">
+                    <div class="form-group panel-body">
+                        <ul class="nav">
+                            <li class="nav-header"><h4>Enter location</h4></li>
+                            <li class="nav-header"><input class="form-control" type="text" placeholder="Search"></li>
+                            <li class="nav-header">&nbsp;</li>
+                            <li class="nav-header"><button class="btn btn-primary">Pick location</button></li>
+                            <li class="nav-header"><h4>Service</h4> <input class="form-control" type="text"></li>
+                            <li class="nav-header">&nbsp;</li>
+                            <li class="nav-header"><label for="comment">Comment:</label></li>
+                            <li class="nav-header"><textarea class="form-control" rows="8" id="comment"></textarea></li>
+                            <li class="nav-header">&nbsp;</li>
+                            <li class="nav-header"><button class="btn btn-primary" type="reset" value="Reset">Reset</button>&nbsp;
+                            <button class="btn btn-success" type="submit">Submit</button></li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#suggestServiceForm">
+                    <h4 class="panel-title">Suggest a Service</h4>
+                </div>
+                <form id="suggestServiceForm" class="panel-collapse collapse">
+                    <div class="form-group panel-body">
+                        <ul class="nav">
+                            <li class="nav-header">&nbsp;</li>
+                            <li class="nav-header"><input class="form-control" type="text" placeholder="Service Name"></li>
+                            <li class="nav-header">&nbsp;</li>
+                            <li class="nav-header"><label class="text-primary">Give your details to get notified :</label></li>
+                            <li class="nav-header"><input class="form-control" type="text" placeholder="Phone"></li>
+                            <li class="nav-header">&nbsp;</li>
+                            <li class="nav-header"><input class="form-control" type="text" placeholder="Email"></li>
+                            <li class="nav-header">&nbsp;</li>
+                            <li class="nav-header"><button class="btn btn-success">Submit</button></li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/.fluid-container-->
+
+
+    <footer class="footer">
+      <div class="container">
+        <p class="text-muted">Developed by Jaspreet.</p>
+      </div>
+    </footer>
+</body>
+</html>

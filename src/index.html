@@ -1,0 +1,160 @@
+<html>
+<head>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places,geometry&language=en-US"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <!--<link rel="stylesheet" href="css/new.css">
+	<script src="controllers/controller.js"></script>-->
+    
+    <script src="http://rawgit.com/nmccready/angular-simple-logger/master/dist/angular-simple-logger.js"></script>
+    <script src="bower_components/lodash/dist/lodash.min.js"></script>
+    <script src="bower_components/angular-google-maps/dist/angular-google-maps.js"></script>
+    
+    <!--Project dependencies-->
+    <link rel="stylesheet" href="scripts/styles/index.css"/>
+    <script type="text/javascript" src="scripts/app.js"></script>
+    <script type="text/javascript" src="scripts/controllers/sproControllers.js"></script>
+    <script type="text/javascript" src="scripts/directives/sproDirectives.js"></script>
+    <script type="text/javascript" src="scripts/services/sproServices.js"></script>
+    <script type="text/javascript" src="scripts/factories/sproFactories.js"></script>
+    <script type="text/javascript" src="scripts/jquery/index.js"></script>
+</head>
+<body ng-app="societyPro" ng-controller="sproMainCtrl as mainCtrl">
+        <!-- Fixed navbar -->
+<div id="header" class="navbar navbar-fixed-top navbar-default">
+  	<div id="navElements" class="container pull-left">
+      <div class="navbar-header"><a class="navbar-brand" href="#">Project name</a><a class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="glyphicon glyphicon-bar"></span>
+          <span class="glyphicon glyphicon-bar"></span>
+          <span class="glyphicon glyphicon-bar"></span>
+        </a>
+      </div>
+        <!--div class="navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a>
+                </li>
+                <li><a href="#about">About</a>
+                </li>
+                <li><a href="#contact">Contact</a>
+                </li>
+            </ul>
+        
+        </div>
+        <!--/.navbar-collapse -->
+    </div>
+</div>
+    
+<!--<ui-gmap-google-map center="mainCtrl.map.center" zoom="mainCtrl.map.zoom" draggable="true" events="mainCtrl.map.events">
+    <ui-gmap-marker ng-repeat="m in mainCtrl.map.markers" coords="m.coords" icon="m.icon" idkey="m.id"></ui-gmap-marker>
+</ui-gmap-google-map>
+
+<spro-map-canvas id="mapBody" map="mainCtrl.map" map-values="mainCtrl.mapValues"></spro-map-canvas>-->
+<div id="mapBody"></div>
+<div id="leftPanel" class="container">
+    <div class="sidebar-nav-fixed affix">
+        <div class="panel-group" id="accordion">
+            
+            <div class="panel panel-default" ng-controller="findSrvcCtrl as ctrl">
+                <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#searchServiceForm">
+                    <h4 class="panel-title">Looking for a Service</h4>
+                </div>
+                <form id="searchServiceForm" class="panel-collapse collapse" ng-submit="ctrl.submitForm()" novalidate>
+                    <div class="form-group panel-body">
+                        <ul class="nav">
+                            <li class="nav-header"><h4>Location</h4></li>
+                            <li class="nav header">
+                                <div class="btn-group btn-toggle"> 
+                                    <button id="enterLocationBtn" class="btn btn-primary active" ng-click="ctrl.placeEnterLocationMarker()">Enter</button>
+                                    <button id="pickLocationBtn" class="btn btn-default" ng-click="ctrl.placePickLocationMarker()">Pick</button>
+                                </div>
+                            </li>
+                            <li class="nav-header">&nbsp;</li>
+                            <li class="nav-header" id="enterLocationInput"><spro-search-location location="markerLocation"></spro-search-location></li>   
+                            <li class="nav-header" id="pickLocationInput" style="display:none";><input class="form-control" id="pickLocationInputBox" type="text" value="Move Marker on Map"></li> 
+                            <li class="nav-header">&nbsp;</li>
+                            <li class="nav-header" id="pickLocationIntro" style="display:none";><p class="text-primary">* pick location by moving marker on map.</p></li>
+                            <li class="nav-header"><spro-dropdown items="ctrl.radius" label="Select Radius" title="Select" selected-item="ctrl.selectedRadius"></spro-dropdown></li>
+                            <li class="nav-header"><spro-dropdown items="mainCtrl.serviceNames" label="Select Service" title="Select" selected-item="selectedServiceName"></spro-dropdown></li>
+                            <li class="nav-header">&nbsp;</li>
+                            <li class="nav-header"><button class="btn btn-primary" ng-click="ctrl.reset()" type="reset" value="Reset">Reset</button>&nbsp;
+                            <button class="btn btn-success" type="submit">Find</button></li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="panel panel-default" ng-controller="reportSrvcCtrl as ctrl">
+                <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#reportServiceForm">
+                    <h4 class="panel-title">Report a Service</h4>
+                </div>
+                <form id="reportServiceForm" class="panel-collapse collapse" ng-submit="ctrl.submitForm()" novalidate>
+                    <div class="form-group panel-body">
+                        <ul class="nav">
+                            <li class="nav-header"><h4>Location</h4></li>
+                            <li class="nav header">
+                                <div class="btn-group btn-toggle"> 
+                                    <button id="enterLocationBtn" class="btn btn-primary active" ng-click="mainCtrl.placeEnterLocationMarker()">Enter</button>
+                                    <button id="pickLocationBtn" class="btn btn-default" ng-click="mainCtrl.placePickLocationMarker()">Pick</button>
+                                </div>
+                            </li>
+                            <li class="nav-header">&nbsp;</li>
+                            <li class="nav-header" id="pickLocationIntro" style="display:none";><p class="text-primary">* pick location by moving marker on map.</p></li>
+                            <li class="nav-header" id="enterLocationInput"><spro-search-location location="markerLocation"></spro-search-location></li>   
+                            <li class="nav-header" id="pickLocationInput" style="display:none";><input class="form-control" id="pickLocationInputBox" type="text" value="Move Marker on Map" disabled></li>
+                            <li class="nav-header">&nbsp;</li>
+                            <li class="nav-header"><spro-dropdown items="mainCtrl.serviceNames" label="Select Service" title="Select" selected-item="selectedServiceName"></spro-dropdown></li>
+                            <li class="nav-header">&nbsp;</li>
+                            <li class="nav-header"><label for="description">Descripton :</label></li>
+                            <li class="nav-header"><textarea class="form-control" rows="5" id="description"></textarea></li>
+                            <li class="nav-header">&nbsp;</li>
+                            <li class="nav-header"><button class="btn btn-primary" type="reset" value="Reset">Reset</button>&nbsp;
+                            <button class="btn btn-success" type="submit">Submit</button></li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="panel panel-default" ng-controller="suggestSrvcCtrl as ctrl">
+                <div class="panel-heading" data-toggle="collapse" data-parent="#accordion" href="#suggestServiceForm">
+                    <h4 class="panel-title">Suggest a Service</h4>
+                </div>
+                <form id="suggestServiceForm" class="panel-collapse collapse" ng-submit="ctrl.submitForm()">
+                    <div class="form-group panel-body">
+                        <ul class="nav">
+                            <li class="nav-header">&nbsp;</li>
+                            <li class="nav-header"><input class="form-control" ng-model="ctrl.suggestedSrvc" type="text" placeholder="Service Name"></li>
+                            <li class="nav-header">&nbsp;</li>
+                            <li class="nav-header"><label class="text-primary">Give your details to get notified :</label></li>
+                            <li class="nav-header"><input class="form-control" ng-model="ctrl.phone" type="text" placeholder="Phone"></li>
+                            <li class="nav-header">&nbsp;</li>
+                            <li class="nav-header"><input class="form-control" ng-model="ctrl.email" type="text" placeholder="Email"></li>
+                            <li class="nav-header">&nbsp;</li>
+                            <li class="nav-header"><button class="btn btn-primary" type="reset" value="Reset">Reset</button>&nbsp;
+                            <button class="btn btn-success" type="submit">Submit</button></li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/.fluid-container-->
+
+    <footer class="footer">
+      <div class="container">
+        <p class="text-muted">Developed by Jaspreet.</p>
+      </div>
+    </footer>
+</body>
+</html>
+
+<!--<div ng-app="main" ng-controller="mainCtrl">
+    <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" events="map.events">
+        <ui-gmap-marker ng-repeat="m in map.markers" coords="m.coords" icon="m.icon" idkey="m.id"></ui-gmap-marker>
+    </ui-gmap-google-map>
+</div>-->
